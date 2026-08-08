@@ -1,1 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#073b78">
+  <meta name="description" content="TTA Worldwide railroad crossing alerts for Detroit drivers.">
+  <title>TTA Worldwide | Detroit Rail Alerts</title>
+  <link rel="stylesheet" href="style.css">
+</head>
 
+<body>
+  <header class="topbar">
+    <a class="brand" href="#home" aria-label="TTA Worldwide home">
+      <span class="brand-mark">X</span>
+
+      <span>
+        <strong>TTA Worldwide</strong>
+        <small>Train Tracking Across America</small>
+      </span>
+    </a>
+
+    <button
+      id="notificationButton"
+      class="icon-button"
+      type="button"
+      aria-label="Enable alerts"
+    >
+      🔔
+    </button>
+  </header>
+
+  <main>
+    <section id="home" class="screen active">
+      <div class="hero">
+        <p class="eyebrow">DETROIT RAIL ALERT NETWORK</p>
+
+        <h1>Know before the train blocks your route.</h1>
+
+        <p>
+          Live-style crossing updates, safer decisions,
+          and faster alternate routes.
+        </p>
+
+        <div class="hero-actions">
+          <button
+            id="locationButton"
+            class="button primary"
+            type="button"
+          >
+            Use My Location
+          </button>
+
+          <button
+            id="demoButton"
+            class="button secondary"
+            type="button"
+          >
+            Run Live Demo
+          </button>
+        </div>
+
+        <p
+          id="locationMessage"
+          class="status-message"
+          aria-live="polite"
+        >
+          Location is off. Demo crossings are shown below.
+        </p>
+      </div>
+
+      <section class="summary" aria-label="Crossing summary">
+        <article>
+          <strong id="clearCount">2</strong>
+          <span>Clear</span>
+        </article>
+
+        <article>
+          <strong id="blockedCount">1</strong>
+          <span>Blocked</span>
+        </article>
+
+        <article>
+          <strong id="warningCount">1</strong>
+          <span>Approaching</span>
+        </article>
+      </section>
+
+      <section class="section-wrap">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow dark">NEARBY CROSSINGS</p>
+            <h2>Detroit crossing status</h2>
+          </div>
+
+          <span id="lastUpdated">Updated now</span>
+        </div>
+
+        <div
+          id="crossingList"
+          class="crossing-list"
+        ></div>
+      </section>
+    </section>
+
+    <section id="map" class="screen section-wrap">
+      <p class="eyebrow dark">AREA VIEW</p>
+      <h1>Crossing map</h1>
+
+      <div
+        class="map-card"
+        role="img"
+        aria-label="Demonstration map of Detroit railroad crossings"
+      >
+        <div class="road road-one"></div>
+        <div class="road road-two"></div>
+        <div class="rail-line"></div>
+
+        <button
+          class="map-pin clear-pin"
+          data-crossing="Van Dyke Ave & Nevada Ave"
+          type="button"
+        >
+          ✓
+        </button>
+
+        <button
+          class="map-pin blocked-pin"
+          data-crossing="Conant St & Davison St"
+          type="button"
+        >
+          !
+        </button>
+
+        <button
+          class="map-pin warning-pin"
+          data-crossing="Dequindre St & 8 Mile Rd"
+          type="button"
+        >
+          ▲
+        </button>
+      </div>
+
+      <p id="mapMessage" class="panel-message">
+        Tap a map marker for crossing information.
+      </p>
+    </section>
+
+    <section id="report" class="screen section-wrap">
+      <p class="eyebrow dark">COMMUNITY REPORT</p>
+      <h1>Report a train</h1>
+
+      <form id="reportForm" class="report-form">
+        <label for="crossingName">
+          Crossing or intersection
+        </label>
+
+        <input
+          id="crossingName"
+          name="crossingName"
+          placeholder="Example: Van Dyke & Nevada"
+          required
+        >
+
+        <label for="reportStatus">
+          What is happening?
+        </label>
+
+        <select
+          id="reportStatus"
+          name="reportStatus"
+          required
+        >
+          <option value="">Choose a status</option>
+          <option>Train approaching</option>
+          <option>Crossing blocked</option>
+          <option>Crossing clear</option>
+        </select>
+
+        <label for="waitTime">
+          Estimated wait
+        </label>
+
+        <select id="waitTime" name="waitTime">
+          <option>Unknown</option>
+          <option>Under 5 minutes</option>
+          <option>5–10 minutes</option>
+          <option>Over 10 minutes</option>
+        </select>
+
+        <button
+          class="button primary full"
+          type="submit"
+        >
+          Submit Report
+        </button>
+      </form>
+
+      <p
+        id="reportMessage"
+        class="panel-message"
+        aria-live="polite"
+      >
+        Community reports help nearby drivers avoid delays.
+      </p>
+    </section>
+
+    <section id="alerts" class="screen section-wrap">
+      <p class="eyebrow dark">YOUR ALERTS</p>
+      <h1>Alert settings</h1>
+
+      <div class="settings-card">
+        <label class="toggle-row">
+          <span>
+            <strong>Approaching trains</strong>
+            <small>
+              Alert before a train reaches a crossing
+            </small>
+          </span>
+
+          <input type="checkbox" checked>
+        </label>
+
+        <label class="toggle-row">
+          <span>
+            <strong>Blocked crossings</strong>
+            <small>
+              Alert when a crossing is currently blocked
+            </small>
+          </span>
+
+          <input type="checkbox" checked>
+        </label>
+
+        <label class="toggle-row">
+          <span>
+            <strong>Crossing cleared</strong>
+            <small>
+              Know when traffic begins moving again
+            </small>
+          </span>
+
+          <input type="checkbox">
+        </label>
+      </div>
+
+      <button
+        id="testAlertButton"
+        class="button primary full"
+        type="button"
+      >
+        Test My Alert
+      </button>
+
+      <p
+        id="alertMessage"
+        class="panel-message"
+        aria-live="polite"
+      >
+        Your settings are saved automatically on this device.
+      </p>
+    </section>
+  </main>
+
+  <nav class="bottom-nav" aria-label="Main navigation">
+    <button
+      class="nav-button active"
+      data-screen="home"
+      type="button"
+    >
+      <span>⌂</span>
+      Home
+    </button>
+
+    <button
+      class="nav-button"
+      data-screen="map"
+      type="button"
+    >
+      <span>⌖</span>
+      Map
+    </button>
+
+    <button
+      class="nav-button report-button"
+      data-screen="report"
+      type="button"
+    >
+      <span>＋</span>
+      Report
+    </button>
+
+    <button
+      class="nav-button"
+      data-screen="alerts"
+      type="button"
+    >
+      <span>🔔</span>
+      Alerts
+    </button>
+  </nav>
+
+  <div
+    id="toast"
+    class="toast"
+    role="status"
+    aria-live="polite"
+  ></div>
+
+  <footer>
+    <strong>TTA Worldwide</strong>
+    <span>Prototype • Detroit, Michigan • © 2026</span>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+          </html>
